@@ -1,7 +1,9 @@
-import { readFile } from "fs/promises";
 // When deploying swagger on vercel on nodejs it does not show UI #8461
 // https://github.com/swagger-api/swagger-ui/issues/8461#issuecomment-2002404091
-const css = await readFile("./node_modules/swagger-ui-dist/swagger-ui.css", "utf8");
+
+// https://stackoverflow.com/questions/72133185/deploy-an-express-server-that-uses-express-static-to-serve-a-build-folder-to-ver
+
+// https://github.com/vercel/ncc/issues/406
 
 const getSwaggerOptions = () => {
 	return {
@@ -26,8 +28,7 @@ const getSwaggerOptions = () => {
 			]
 		},
 		paths: {},
-		apis: ["./src/routes/*.js"],
-		customCss: css
+		apis: ["./src/routes/*.js"]
 	};
 };
 
