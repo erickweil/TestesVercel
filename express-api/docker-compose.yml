@@ -1,9 +1,9 @@
 services:
-  node-app:
+  express-api:
     build: .
-    container_name: node-app
+    container_name: express-api
     environment:
-      - PORT=3000
-      - DEBUGLOG=false # não fazer log em produção
+      PORT: 3000
+      SWAGGER_URL: "http://localhost:3001"
     ports:
-      - "3000:3000"
+      - "3001:3000"

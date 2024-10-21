@@ -1,0 +1,11 @@
+services:
+  nextjs-website:
+    build: .
+    container_name: nextjs-website
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      TITULO: "Testando com Docker"
+
+# docker compose up -d --build --force-recreate

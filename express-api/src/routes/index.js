@@ -1,3 +1,4 @@
+import express from "express";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 
@@ -30,6 +31,7 @@ const routes = (app) => {
 		res.status(200).redirect("docs"); // redirecionando para documentação
 	});
 
+	// https://github.com/swagger-api/swagger-ui/issues/8461#issuecomment-2002404091
 	app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(getSwaggerOptions())));
 
 	app.use(
