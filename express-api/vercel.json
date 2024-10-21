@@ -11,7 +11,7 @@
       }
     ],
     "routes": [
-      { "src": "(.*)", "dest": "server.js" },
-      { "src": "\\/docs\\/(swagger-ui\\.css|swagger-ui-bundle\\.js|swagger-ui-standalone-preset\\.js)", "dest": "public/$1" }
+      { "src": "\\/docs\\/(swagger-ui\\.css|swagger-ui-bundle\\.js|swagger-ui-standalone-preset\\.js)", "dest": "public/$1" },
+      { "src": "(.*)", "dest": "server.js" }
     ]
   }
