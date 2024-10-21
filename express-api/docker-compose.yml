@@ -1,0 +1,9 @@
+services:
+  node-app:
+    build: .
+    container_name: node-app
+    environment:
+      - PORT=3000
+      - DEBUGLOG=false # não fazer log em produção
+    ports:
+      - "3000:3000"
