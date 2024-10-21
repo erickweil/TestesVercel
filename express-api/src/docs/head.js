@@ -5,6 +5,8 @@
 
 // https://github.com/vercel/ncc/issues/406
 
+// https://github.com/scottie1984/swagger-ui-express/issues/114#issuecomment-2160925816
+
 const getSwaggerOptions = () => {
 	return {
 		swaggerDefinition: {
