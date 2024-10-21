@@ -1,4 +1,3 @@
-import express from "express";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 
@@ -31,7 +30,9 @@ const routes = (app) => {
 		res.status(200).redirect("docs"); // redirecionando para documentação
 	});
 
-	app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(getSwaggerOptions())));
+	app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(getSwaggerOptions()), {
+		customCssUrl: "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css",
+	}));
 
 	app.use(
 		aleatorio,
