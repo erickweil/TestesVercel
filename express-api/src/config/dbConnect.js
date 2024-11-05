@@ -30,7 +30,7 @@ paginate.paginate.options = {
 };
 
 export async function conectarBanco() {
-    const bancoUrl = process.env.DB_URL;
+    const bancoUrl = process.env.MONGODB_URI;
 
     // Para ver todas as requisições feitas ao banco
     //mongoose.set("debug", true);
@@ -38,7 +38,7 @@ export async function conectarBanco() {
     if (mongoose.connection.readyState === 1) return; // já está conectado
 
     if(!bancoUrl) {
-        throw new Error("Impossível se conectar ao banco de dados. \nÉ necessário configurar a variável de ambiente DB_URL com a string de conexão do banco de dados.");
+        throw new Error("Impossível se conectar ao banco de dados. \nÉ necessário configurar a variável de ambiente MONGODB_URI com a string de conexão do banco de dados.");
     }
 
     try {
