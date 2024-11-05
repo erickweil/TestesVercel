@@ -1,8 +1,11 @@
 import "dotenv/config";
+import { conectarBanco } from "./config/dbConnect.js";
 import express from "express";
 import cors from "cors";
 
 import routes from "./routes/index.js";
+
+await conectarBanco();
 
 const app = express();
 
