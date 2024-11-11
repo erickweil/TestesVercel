@@ -1,0 +1,41 @@
+name: CI CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  TESTE_NOME: "Um nome aqui"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Testando ambiente
+        run: |
+          echo "Hello CI/CD!"
+          echo "$TESTE_NOME"
+          echo "Listando o diretório atual"
+          ls -lhas
+          cd express-api
+          ls -lhas
+
+      - name: Instalar dependências
+        run: |
+          cd express-api
+          cp .env.example .env
+          npm ci
+          
+      - name: Executar testes
+        run: |
+          cd express-api
+          npm run test
