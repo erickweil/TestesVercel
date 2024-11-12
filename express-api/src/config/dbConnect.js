@@ -32,6 +32,7 @@ paginate.paginate.options = {
 export async function conectarBanco() {
     const bancoUrl = process.env.MONGODB_URI;
 
+    console.log(bancoUrl);
     // Para ver todas as requisições feitas ao banco
     //mongoose.set("debug", true);
 

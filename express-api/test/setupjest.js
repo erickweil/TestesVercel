@@ -10,7 +10,7 @@ export default async function setupJest(globalConfig, projectConfig) {
 	// Set reference to mongod in order to close the server during teardown.
 	globalThis.__MONGOD__ = mongod;
 
-	process.env.DB_URL = mongod.getUri();
+	process.env.MONGODB_URI = mongod.getUri();
 	//console.log("Iniciado banco, DB_URL: ", process.env.DB_URL);
 
     await conectarBanco();
