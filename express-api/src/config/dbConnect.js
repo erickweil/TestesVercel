@@ -32,17 +32,15 @@ paginate.paginate.options = {
 export async function conectarBanco() {
     const bancoUrl = process.env.MONGODB_URI;
 
-    console.log(bancoUrl);
     // Para ver todas as requisições feitas ao banco
     //mongoose.set("debug", true);
 
     if (mongoose.connection.readyState === 1) return; // já está conectado
 
-    if(!bancoUrl) {
-        throw new Error("Impossível se conectar ao banco de dados. \nÉ necessário configurar a variável de ambiente MONGODB_URI com a string de conexão do banco de dados.");
-    }
-
     try {
+        if(!bancoUrl) {
+            throw new Error("Impossível se conectar ao banco de dados. \nÉ necessário configurar a variável de ambiente MONGODB_URI com a string de conexão do banco de dados.");
+        }
         mongoose.set("strictQuery", true);
 
 		if(process.env.DEBUGLOG === "true")
@@ -59,11 +57,16 @@ export async function conectarBanco() {
 				if(process.env.DEBUGLOG === "true") console.log("Desconectou do banco de dados.");
 			});
 
-		await mongoose.connect(bancoUrl);
+        // Timeout de 3 segundos na tentativa de conexão
+		await mongoose.connect(bancoUrl, {
+            serverSelectionTimeoutMS: 3000,
+            socketTimeoutMS: 3000,
+            connectTimeoutMS: 3000,
+        });
 
     } catch (error) {
-        console.log("Erro ao conectar com banco:" + error);
-        throw error; // não iniciar o servidor se não conseguir se conectar com o banco
+        console.error("Erro ao conectar com o banco de dados:", error);
+        throw error; // Lançar erro caso não consiga conectar
     }
 }
 
@@ -73,14 +76,3 @@ export async function desconetarBanco() {
 
     await mongoose.connection.close();
 }
-
-async function callbackSigTerm() {
-    try {
-        await desconetarBanco();
-    } finally {
-        process.exit(); // como está interceptando o SIGINT e SIGTERM se não chamar exit o processo não é terminado.
-    }
-}
-
-// If the Node process ends, close the Mongoose connection
-process.on("SIGINT", callbackSigTerm).on("SIGTERM", callbackSigTerm);

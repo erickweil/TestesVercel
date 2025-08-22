@@ -3,7 +3,6 @@ import swaggerJsDoc from "swagger-jsdoc";
 
 import getSwaggerOptions from "../docs/head.js";
 
-import usuarios from "./testeRoutes.js";
 import aleatorio from "./aleatorioRoutes.js";
 import postagem from "./postagemRoutes.js";
 
@@ -37,12 +36,19 @@ const routes = (app) => {
 
 	app.use(
 		aleatorio,
-		usuarios,
 		postagem
 	);
 
 	app.use((req,res,next) => {
 		res.sendStatus(404);
+	});
+
+	// Por último o middleware de tratamento de erros
+	app.use((error, req, res, next) => {
+		console.error(error);
+		if(!res.headersSent) {
+			res.status(500).json({ error: "Internal Server Error", message: error.message });
+		}
 	});
 };
 

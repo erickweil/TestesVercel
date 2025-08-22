@@ -1,11 +1,11 @@
 import "dotenv/config";
-import { conectarBanco } from "./config/dbConnect.js";
 import express from "express";
 import cors from "cors";
 
 import routes from "./routes/index.js";
 
-await conectarBanco();
+// para ser opcional conectar no banco de dados chama só nas rotas que precisam
+// conectarBanco();
 
 const app = express();
 
