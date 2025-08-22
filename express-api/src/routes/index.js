@@ -1,10 +1,6 @@
-import swaggerUI from "swagger-ui-express";
-import swaggerJsDoc from "swagger-jsdoc";
-
-import getSwaggerOptions from "../docs/head.js";
-
 import aleatorio from "./aleatorioRoutes.js";
 import postagem from "./postagemRoutes.js";
+import swaggerRoute from "./swaggerRoute.js";
 
 export const logRoutes = (req,res,next) => {
 	const timestamp = new Date().toISOString();
@@ -27,12 +23,10 @@ const routes = (app) => {
 	}
 
 	app.get("/",(req, res) => {
-		res.status(200).redirect("docs"); // redirecionando para documentação
+		res.status(200).redirect("docs/docs.html"); // redirecionando para documentação
 	});
 
-	app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(getSwaggerOptions()), {
-		customCssUrl: [ "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css" ]
-	}));
+	app.use("/docs", swaggerRoute);
 
 	app.use(
 		aleatorio,

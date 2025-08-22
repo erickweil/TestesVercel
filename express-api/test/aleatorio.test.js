@@ -7,7 +7,7 @@ describe("Aleatorio",() => {
 
 	test("numero Aleatorio", async () => {
 		const res = await request(app)
-			.get("/aleatorio");
+			.get("/teste/aleatorio");
 
 		expect(res.status).toBe(200);
 
