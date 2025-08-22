@@ -9,13 +9,13 @@ describe("Teste",() => {
 
 	test("Receber mensagem", async () => {
 		const mensagemEnviada = "Oi tudo bem?";
-		const resp = await req.get("/teste")
+		const resp = await req.get("/teste/mensagem")
 			.set("Accept", "aplication/json")  
-			.query({msg: mensagemEnviada})
+			.query({teste: mensagemEnviada})
 			.expect("content-type", /json/)	  
 			.expect(200);
 
-		let mensagemRecebida = resp.body.body.msg;
+		let mensagemRecebida = resp.body.mensagem;
 		expect(mensagemRecebida).toBe(mensagemEnviada);
 	});
 
