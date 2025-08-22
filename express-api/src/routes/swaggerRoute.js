@@ -28,19 +28,30 @@ const swaggerUiOptions = {
 };
 
 const swaggerUiDistPath = swaggerUIDist.getAbsoluteFSPath();
-const swaggerDocs = swaggerJsDoc(getSwaggerOptions());
+
+// Só carrega o Swagger quando for necessário, para não carregar desnecessariamente 
+let swaggerDocs;
+let swaggerUISetup;
+const loadSwaggerDocs = (req, res, next) => {
+	if(!swaggerDocs) {
+		console.log("Carregando Swagger Docs...");
+		swaggerDocs = swaggerJsDoc(getSwaggerOptions());
+		swaggerUISetup = swaggerUI.setup(swaggerDocs, swaggerUiOptions);
+	}
+	next();
+};
 
 router.get("/",(req, res) => {
 	res.status(200).redirect("docs.html"); // redirecionando para documentação
 });
 
 // Para poder acessar o JSON do Swagger diretamente
-router.get("/swagger.json", (req, res) => {
+router.get("/swagger.json", loadSwaggerDocs, (req, res) => {
 	res.setHeader("Content-Type", "application/json");
 	res.send(swaggerDocs);
 });
 
 router.use(express.static(swaggerUiDistPath));
-router.use(swaggerUI.serve, swaggerUI.setup(swaggerDocs, swaggerUiOptions));
+router.use(loadSwaggerDocs, swaggerUI.serve, (req, res, next) => { swaggerUISetup(req, res, next); });
 
 export default router;

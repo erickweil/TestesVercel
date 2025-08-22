@@ -79,34 +79,6 @@ const postagemPaths = {
                             }
                         }
                     }
-                },
-                500: {
-                    description: "Erro interno do servidor",
-                    content: {
-                        "application/json": {
-                            schema: {
-                                type: "object",
-                                properties: {
-                                    error: {
-                                        type: "boolean",
-                                        example: true
-                                    },
-                                    code: {
-                                        type: "integer",
-                                        example: 500
-                                    },
-                                    message: {
-                                        type: "string",
-                                        example: "OK"
-                                    },
-                                    errors: {
-                                        type: "array",
-                                        example: []
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
             }
         },
@@ -153,62 +125,6 @@ const postagemPaths = {
                                     code: {
                                         type: "integer",
                                         example: 201
-                                    },
-                                    message: {
-                                        type: "string",
-                                        example: "OK"
-                                    },
-                                    errors: {
-                                        type: "array",
-                                        example: []
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                400: {
-                    description: "Dados inválidos fornecidos para criação da postagem",
-                    content: {
-                        "application/json": {
-                            schema: {
-                                type: "object",
-                                properties: {
-                                    error: {
-                                        type: "boolean",
-                                        example: true
-                                    },
-                                    code: {
-                                        type: "integer",
-                                        example: 400
-                                    },
-                                    message: {
-                                        type: "string",
-                                        example: "Dados inválidos."
-                                    },
-                                    errors: {
-                                        type: "array",
-                                        example: ["Título é obrigatório.", "Descrição é obrigatória."]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                500: {
-                    description: "Erro interno do servidor",
-                    content: {
-                        "application/json": {
-                            schema: {
-                                type: "object",
-                                properties: {
-                                    error: {
-                                        type: "boolean",
-                                        example: true
-                                    },
-                                    code: {
-                                        type: "integer",
-                                        example: 500
                                     },
                                     message: {
                                         type: "string",

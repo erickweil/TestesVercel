@@ -2,6 +2,7 @@
 // https://github.com/swagger-api/swagger-ui/issues/8461#issuecomment-2002404091
 
 import postagemPaths from "./postagensRoute.js";
+import testePaths from "./testeRoute.js";
 
 // https://stackoverflow.com/questions/72133185/deploy-an-express-server-that-uses-express-static-to-serve-a-build-folder-to-ver
 
@@ -31,7 +32,8 @@ const getSwaggerOptions = () => {
 				}
 			],
 			paths: {
-				...postagemPaths
+				...postagemPaths,
+				...testePaths
 			}
 		},
 		apis: ["./src/routes/*.js"]
