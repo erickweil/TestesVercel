@@ -6,7 +6,6 @@ const app = express();
 
 app.use(cors());
 
-const port = 3000;
  
 const startTime = new Date();
 let contador = 0;
@@ -23,10 +22,16 @@ app.get("/info", (req, res) => {
     });
 });
  
-app.listen(port, (e) => {
-    if(e) {
-        console.error(`Error starting server:`, e);
-        throw e;
-    }
-    console.log(`Example app listening on port ${port}`);
-});
+
+if (!process.env.VERCEL) {
+    const port = 3000;
+    app.listen(port, (e) => {
+        if(e) {
+            console.error(`Error starting server:`, e);
+            throw e;
+        }
+        console.log(`Example app listening on port ${port}`);
+    });
+}
+
+export default app;
