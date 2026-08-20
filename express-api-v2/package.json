@@ -5,6 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "start": "node dist/server.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
     "dev": "tsx --watch ./server.ts",
     "build": "tsc"
   },
@@ -13,16 +15,22 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@scalar/express-api-reference": "^0.10.14",
     "@types/node": "^26.2.0",
+    "better-auth": "^1.7.1",
+    "compression": "^1.8.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "express": "^5.2.1",
-    "postgres": "^3.4.9"
+    "postgres": "^3.4.9",
+    "swagger-jsdoc": "^6.3.0"
   },
   "devDependencies": {
+    "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/swagger-jsdoc": "^6.0.4",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.23.11",
     "typescript": "^6"
