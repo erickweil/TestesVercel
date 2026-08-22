@@ -1,6 +1,6 @@
 
 // Use "type: module" in package.json to use ES modules
-import express from 'express';
+import express, { type ErrorRequestHandler } from 'express';
 import cors from 'cors';
 import { db } from './db/drizzle.ts';
 import { toNodeHandler } from 'better-auth/node';
@@ -31,6 +31,7 @@ app.all("/api/auth/*splat", toNodeHandler(auth)); // For ExpressJS v5
 // Mount express json middleware after Better Auth handler
 // or only apply it to routes that don't interact with Better Auth
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const startTime = new Date();
 
@@ -58,6 +59,24 @@ app.post("/contador", async (req, res) => {
 
     res.status(200).json(linhas[0]);
 });
+
+
+// Se não é nenhuma rota válida, produz 404
+app.use((req, res, next) => {
+    res.sendStatus(404);
+});
+
+// Por último o middleware de tratamento de erros
+app.use(((error, req, res, next) => {
+    console.error(error);
+    // if(error instanceof JogoError) {
+    // 	res.status(400).json({ ok: true, message: error.message });
+    // }
+
+    if(!res.headersSent) {
+        res.status(500).json({ error: "Erro interno do servidor", message: error.message });
+    }
+}) as ErrorRequestHandler);
  
 
 export default app;

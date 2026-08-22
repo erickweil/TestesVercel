@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
 import * as schema from "./schema.ts";
@@ -16,3 +18,8 @@ export const db = drizzle(client, {
     schema: schema,
     logger: true,
 });
+export type DatabaseType = typeof db;
+
+export async function desconectarBanco() {
+    await client.end({ timeout: 5 });
+}
