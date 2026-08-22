@@ -6,9 +6,10 @@ import {
   boolean,
   index,
   uniqueIndex,
+  pgSchema,
 } from "drizzle-orm/pg-core";
 
-export const user = pgTable("user", {
+export const user = pgSchema("testes_vercel").table("user", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
@@ -21,7 +22,7 @@ export const user = pgTable("user", {
     .notNull(),
 });
 
-export const session = pgTable(
+export const session = pgSchema("testes_vercel").table(
   "session",
   {
     id: text("id").primaryKey(),
@@ -40,7 +41,7 @@ export const session = pgTable(
   (table) => [index("session_userId_idx").on(table.userId)],
 );
 
-export const account = pgTable(
+export const account = pgSchema("testes_vercel").table(
   "account",
   {
     id: text("id").primaryKey(),
@@ -71,7 +72,7 @@ export const account = pgTable(
   ],
 );
 
-export const verification = pgTable(
+export const verification = pgSchema("testes_vercel").table(
   "verification",
   {
     id: text("id").primaryKey(),
