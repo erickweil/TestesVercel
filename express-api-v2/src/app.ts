@@ -5,6 +5,7 @@ import cors from 'cors';
 import { db } from './db/drizzle.ts';
 import { toNodeHandler } from 'better-auth/node';
 import { auth } from './lib/auth.ts';
+import { requireAuth, withSession } from './lib/session.ts';
 
 const app = express();
 app.set("trust proxy", 1);
@@ -33,6 +34,9 @@ app.all("/api/auth/*splat", toNodeHandler(auth)); // For ExpressJS v5
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Resolve a sessão de todas as rotas abaixo (aceita cookie ou `Authorization: Bearer`)
+app.use(withSession);
+
 const startTime = new Date();
 
 // Define your routes
@@ -46,14 +50,19 @@ app.get("/info", (req, res) => {
     });
 });
 
-app.get("/contador", async (req, res) => {
+// Devolve o usuário da sessão atual, útil para o frontend validar o token
+app.get("/me", requireAuth, (req, res) => {
+    res.status(200).json(req.auth!.user);
+});
+
+app.get("/contador", requireAuth, async (req, res) => {
     // Listar todas as tabelas do banco
     let linhas = await db.execute(`SELECT * FROM public.contador LIMIT 1`);
 
     res.status(200).json(linhas[0]);
 });
 
-app.post("/contador", async (req, res) => {
+app.post("/contador", requireAuth, async (req, res) => {
     // Incrementar o contador
     const linhas = await db.execute(`UPDATE public.contador SET count = count + 1 WHERE id = 1 RETURNING *`);
 
